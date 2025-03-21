@@ -1,0 +1,25 @@
+import requests
+
+def test_create_post_success():
+    url = "https://jsonplaceholder.typicode.com/posts"
+    payload = {
+        "title": "foo",
+        "body": "bar",
+        "userId": 1
+    }
+    
+    # Отправляем POST-запрос
+    response = requests.post(url, json=payload)
+    
+    # Проверяем статус-код ответа
+    assert response.status_code == 201, "Expected status code 201, got {}".format(response.status_code)
+    
+    # Проверяем, что ответ содержит ожидаемые данные
+    response_data = response.json()
+    assert response_data["title"] == payload["title"], "Title does not match"
+    assert response_data["body"] == payload["body"], "Body does not match"
+    assert response_data["userId"] == payload["userId"], "UserId does not match"
+
+if __name__ == "__main__":
+    import pytest
+    pytest.main()
